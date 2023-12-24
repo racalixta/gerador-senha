@@ -1,10 +1,29 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { useState } from "react";
 
 export function PasswordItem({ data, removePassword }) {
+  const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+
+
   return (
-    <Pressable onLongPress={removePassword} style={styles.container}>
-      <Text style={styles.text}>{data}</Text>
-    </Pressable>
+    <View style={styles.container}>
+
+      <TextInput secureTextEntry={passwordIsVisible} editable={false} style={styles.text}>{data}</TextInput>
+
+      <View style={styles.buttons}>
+
+        <Pressable onPress={() => setPasswordIsVisible(!passwordIsVisible)}>
+          <Ionicons size={22}  name="eye" />
+        </Pressable>
+
+        <Pressable onPress={removePassword}>
+          <Ionicons size={22} name="trash" />
+        </Pressable>
+
+      </View>
+
+    </View>
   ); 
 }
 
@@ -21,5 +40,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#FFF",
+  },
+  buttons: {
+    flexDirection: "row",
+    width: "18%",
+    justifyContent: "space-between"
   },
 });
